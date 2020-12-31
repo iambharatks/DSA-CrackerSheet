@@ -1,0 +1,1 @@
+{"name":"Local: firstLast","url":"d:\\DSA CrackerSheet\\Sorting And Searching\\firstLast.cpp","tests":[{"id":1608210662190,"input":"2\n9 5\n1 3 5 5 5 5 67 123 125\n9 7\n1 3 5 5 5 5 7 123 125","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA CrackerSheet\\Sorting And Searching\\firstLast.cpp","group":"local","local":true}

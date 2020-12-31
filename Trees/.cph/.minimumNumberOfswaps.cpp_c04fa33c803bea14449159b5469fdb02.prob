@@ -1,0 +1,1 @@
+{"name":"Local: minimumNumberOfswaps","url":"d:\\DSA CrackerSheet\\Trees\\minimumNumberOfswaps.cpp","tests":[{"id":1609346786119,"input":"7\n5 6 7 8 9 10 11","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA CrackerSheet\\Trees\\minimumNumberOfswaps.cpp","group":"local","local":true}
