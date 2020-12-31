@@ -1,0 +1,1 @@
+{"name":"Local: longestRepeatingSubsequences","url":"d:\\DSA CrackerSheet\\String\\longestRepeatingSubsequences.cpp","tests":[{"id":1608150616960,"input":"2\n3\nabc\n5\naxxxy","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA CrackerSheet\\String\\longestRepeatingSubsequences.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: validShuffle","url":"d:\\DSA CrackerSheet\\String\\validShuffle.cpp","tests":[{"id":1607923957099,"input":"aa ab aaab","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA CrackerSheet\\String\\validShuffle.cpp","group":"local","local":true}
