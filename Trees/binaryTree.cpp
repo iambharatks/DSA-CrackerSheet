@@ -609,6 +609,38 @@ int minSwaps(Node *root, int n)
     return ans;
 }
 
+bool isLeafNode(Node *node)
+{
+    if (!node)
+        return false;
+    if (node->left == NULL && node->right == NULL)
+        return true;
+    return false;
+}
+
+bool isSumTree(Node *root)
+{
+    if (!root || isLeafNode(root))
+        return true;
+    int ls = 0, rs = 0;
+    if (isSumTree(root->left) || isSumTree(root->right))
+    {
+        if (root->left == NULL)
+            ls = 0;
+        else if (isLeafNode(root->left))
+            ls = root->left->data;
+        else
+            ls = 2 * root->left->data;
+        if (root->right == NULL)
+            rs = 0;
+        else if (isLeafNode(root->right))
+            rs = root->right->data;
+        else
+            rs = 2 * root->right->data;
+        return (root->data == ls + rs);
+    }
+    return false;
+}
 int main()
 {
     bst tree;

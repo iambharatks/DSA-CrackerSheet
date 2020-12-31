@@ -159,7 +159,6 @@ void btToDll(Node *root, Node **head)
     btToDll(root->left, head);
 }
 
-
 int main()
 {
     bt tree;
@@ -172,5 +171,4 @@ int main()
         tree.insert(data);
     }
     n = tree.number_of_nodes();
-    cout << minSwaps(tree.root, n);
 }
