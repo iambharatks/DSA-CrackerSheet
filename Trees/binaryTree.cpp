@@ -641,16 +641,94 @@ bool isSumTree(Node *root)
     }
     return false;
 }
+
+int sumOfLongestPathfromRoot(Node *root, int *height)
+{
+    if (!root)
+    {
+        *height = 0;
+        return 0;
+    }
+    int lh = 0, rh = 0;
+    int l = sumOfLongestPathfromRoot(root->left, &lh);
+    int r = sumOfLongestPathfromRoot(root->right, &rh);
+    *height = ((lh > rh) ? lh : rh) + 1;
+    if (lh > rh)
+        return l + root->data;
+    else if (lh < rh)
+        return r + root->data;
+    else
+        return ((l > r) ? l : r) + root->data;
+}
+
+int maxSum(Node *root)
+{
+    if (!root)
+        return 0;
+    return max(maxSum(root->left), maxSum(root->right)) + root->data;
+}
+
+// Maximum sum of nodes in Binary tree such that no two are adjacent
+//Method 1
+int sumOfGrandChildren(Node *node);
+int getMaxSumUtil(Node *node, map<Node *, int> &mp);
+int getMaxSum(Node *node);
+int sumOfGrandChildren(Node *root, map<Node *, int> &mp)
+{
+    int sum = 0;
+    if (root->left)
+        sum += getMaxSumUtil(root->left->left, mp) + getMaxSumUtil(root->left->right, mp);
+    if (root->right)
+        sum += getMaxSumUtil(root->right->left, mp) + getMaxSumUtil(root->right->right, mp);
+    return sum;
+}
+int getMaxSumUtil(Node *root, map<Node *, int> &mp)
+{
+    if (root == NULL)
+        return 0;
+    if (mp.find(root) != mp.end())
+        return mp[root];
+    int inc = root->data + sumOfGrandChildren(root, mp);
+    int exl = getMaxSumUtil(root->left, mp) + getMaxSumUtil(root->right, mp);
+    mp[root] = max(inc, exl);
+    return mp[root];
+}
+int getMaxSum(Node *root)
+{
+    if (!root)
+        return 0;
+    map<Node *, int> mp;
+    return getMaxSumUtil(root, mp);
+}
+//Method 2
+pair<int, int> maxSumUtil(Node *root)
+{
+    if (root == NULL)
+        return {0, 0};
+    pair<int, int> sum1 = maxSumUtil(root->left);
+    pair<int, int> sum2 = maxSumUtil(root->right);
+    pair<int, int> sum;
+    //first = included
+    //second = not included
+    sum.first = sum1.second + sum2.second + root->data;
+    sum.second = max(sum1.first, sum1.second) + max(sum2.first, sum2.second);
+    return sum;
+}
+int getMaxSum2(Node *root)
+{
+    pair<int, int> res = maxSumUtil(root);
+    return max(res.first, res.second);
+}
+
 int main()
 {
     bst tree;
-    int n;
+    int n, data, height = 0;
     cin >> n;
-    int data;
     for (int i = 0; i < n; i++)
     {
         cin >> data;
         tree.insert(data);
     }
-    cout << minSwaps(tree.root, n);
+    cout << getMaxSum2(tree.root) << endl;
 }
