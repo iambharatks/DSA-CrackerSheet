@@ -10,13 +10,13 @@ public:
     Node(int data, Node *left = NULL, Node *right = NULL) : data(data), left(left), right(right) {}
 };
 
-class bst
+class bt
 {
     int nodes;
 
 public:
     Node *root;
-    bst(Node *root = NULL) : root(root), nodes(0) {}
+    bt(Node *root = NULL) : root(root), nodes(0) {}
     int number_of_nodes() { return nodes; }
     // using levelOrder
     void insert(int data)
@@ -720,9 +720,11 @@ int getMaxSum2(Node *root)
     return max(res.first, res.second);
 }
 
+
+
 int main()
 {
-    bst tree;
+    bt tree;
     int n, data, height = 0;
     cin >> n;
     for (int i = 0; i < n; i++)
