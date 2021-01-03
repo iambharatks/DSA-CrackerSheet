@@ -43,6 +43,6 @@ int main()
             cin >> u >> v;
             tree2[u].push(v);
         }
-        cout << mirror(tree1, tree2) << "\n";
+        cout << mirror(tree1, tree2) << '\n';
     }
 }
