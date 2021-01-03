@@ -1,0 +1,1 @@
+{"name":"Local: distBwTwoNodes","url":"d:\\DSA Sheet\\Trees\\distBwTwoNodes.cpp","tests":[{"id":1609685916953,"input":"5\n1 2 3 4 5\n3 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA Sheet\\Trees\\distBwTwoNodes.cpp","group":"local","local":true}

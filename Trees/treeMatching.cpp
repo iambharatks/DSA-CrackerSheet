@@ -186,6 +186,37 @@ string dupSubUtil(Node *root, unordered_set<string> &subtrees)
     return s;
 }
 
+// Duplicate Subtrees
+string dupTrees(Node *root, map<string, int> &mp)
+{
+    if (!root)
+        return "";
+    string s = "(";
+    s += dupTrees(root->left, mp);
+    s += to_string(root->data);
+    s += dupTrees(root->right, mp);
+    s += ")";
+    if (mp[s] == 1)
+        mp[to_string(root->data)] = -1;
+    mp[s]++;
+    return s;
+}
+void printAllDups(Node *root)
+{
+    // Code here
+    map<string, int> mp;
+    dupTrees(root, mp);
+    int cnt = 0;
+    for (auto i : mp)
+        if (i.second == -1)
+        {
+            cout << i.first << " ";
+            cnt++;
+        }
+    if (cnt == 0)
+        cout << -1 << " ";
+}
+
 int main()
 {
     string s;
@@ -193,13 +224,6 @@ int main()
     bt t;
     t.root = treeFromString(t.root, s, 0, s.size() - 1);
     t.inorder();
-    unordered_set<string> subtrees;
-    string str = dupSubUtil(t.root, subtrees);
-    if (str.compare("") == 0)
-        cout << "YES\n";
-    else
-        cout << "NO\n";
-    cout << "Duplicate string " << str << " \n";
-    for (string s : subtrees)
-        cout << s << "\n";
+    cout << endl;
+    printAllDups(t.root);
 }

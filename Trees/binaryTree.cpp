@@ -371,6 +371,27 @@ public:
         rightBoundary(root->right);
     }
 };
+bool search(Node *root, int data)
+{
+    if (!root)
+        return false;
+    Node *tmp;
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        tmp = q.front();
+        if (tmp->data == data)
+            return true;
+        cout << tmp->data << " ";
+        q.pop();
+        if (tmp->left)
+            q.push(tmp->left);
+        if (tmp->right)
+            q.push(tmp->right);
+    }
+    return false;
+}
 
 bool isBalanced(Node *root, int *height)
 {
@@ -719,8 +740,61 @@ int getMaxSum2(Node *root)
     pair<int, int> res = maxSumUtil(root);
     return max(res.first, res.second);
 }
+// Lowest Common Ancestor in a Binary Tree
 
+Node *lca(Node *root, int n1, int n2)
+{
+    if (!root)
+        return NULL;
+    if (root->data == n1 || root->data == n2)
+        return root;
+    Node *left = lca(root->left, n1, n2);
+    Node *right = lca(root->right, n1, n2);
+    if (left && right)
+        return root;
+    return (left) ? left : right;
+}
+int findLCA(Node *root, int n1, int n2)
+{
+    if (!root)
+        return INT_MAX;
+    if (search(root, n1) && search(root, n2))
+    {
+        Node *lcaN = lca(root, n1, n2);
+        return lcaN->data;
+    }
+    return INT_MAX;
+}
 
+bool kthAncestor(Node *root, int data, int &k, int &ancestor)
+{
+    if (!root)
+        return false;
+    if (root->data == data)
+    {
+        k--;
+        return true;
+    }
+    bool left = kthAncestor(root->left, data, k, ancestor);
+    if (left)
+    {
+        if (k == 0)
+            ancestor = root->data, k--;
+        else if (k > 0)
+            k--;
+        return true;
+    }
+    bool right = kthAncestor(root->right, data, k, ancestor);
+    if (right)
+    {
+        if (k == 0)
+            ancestor = root->data, k--;
+        else if (k > 0)
+            k--;
+        return true;
+    }
+    return false;
+}
 
 int main()
 {
@@ -732,5 +806,8 @@ int main()
         cin >> data;
         tree.insert(data);
     }
-    cout << getMaxSum2(tree.root) << endl;
+    int n1, n2, ans = -1;
+    cin >> n1 >> n2;
+    cout << kthAncestor(tree.root, n1, n2, ans) << "\n";
+    cout << n2 << " " << ans << "\n";
 }
