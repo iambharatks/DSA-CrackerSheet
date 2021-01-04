@@ -117,7 +117,51 @@ Node *deleteNode(Node *root, int key)
     }
     return root;
 }
-
+void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
+{
+    if (!root)
+        return;
+    if (root->data == key)
+    {
+        if (root->right)
+        {
+            suc = root->right;
+            while (suc->left)
+                suc = suc->left;
+        }
+        if (root->left)
+        {
+            pre = root->left;
+            while (pre->right)
+                pre = pre->right;
+        }
+    }
+    else if (key < root->data)
+    {
+        suc = root;
+        findPreSuc(root->left, pre, suc, key);
+    }
+    else
+    {
+        pre = root;
+        findPreSuc(root->right, pre, suc, key);
+    }
+}
+Node *LCA(Node *root, int n1, int n2)
+{
+    if (!root)
+        return NULL;
+    if (n1 > n2)
+        swap(n1, n2);
+    if (root->data == n1 || root->data == n2)
+        return root;
+    if ((root->data > n1) && (root->data < n2))
+        return root;
+    if (root->data < n1)
+        return LCA(root->right, n1, n2);
+    else
+        return LCA(root->left, n1, n2);
+}
 int main()
 {
     int n;
@@ -133,4 +177,13 @@ int main()
     tree.lot();
     tree.root = deleteNode(tree.root, 1);
     tree.lot();
+    Node *lca = LCA(tree.root, 18, 55);
+    cout << lca->data << " ";
+
+    // Node *pre = NULL, *suc = NULL;
+    // findPreSuc(tree.root, pre, suc, 40);
+    // if (pre)
+    //     cout << "Inorder predessor is " << pre->data << " ";
+    // if (suc)
+    //     cout << "Inorder successor is " << suc->data << " ";
 }

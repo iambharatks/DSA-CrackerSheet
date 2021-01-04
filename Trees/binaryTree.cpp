@@ -796,6 +796,17 @@ bool kthAncestor(Node *root, int data, int &k, int &ancestor)
     return false;
 }
 
+bool isBST(Node *root)
+{
+    if (!root)
+        return false;
+    if (root->left && root->left->data >= root->data)
+        return false;
+    if (root->right && root->right->data <= root->data)
+        return false;
+    return (isBST(root->left) && isBST(root->right));
+}
+
 int main()
 {
     bt tree;
@@ -806,8 +817,5 @@ int main()
         cin >> data;
         tree.insert(data);
     }
-    int n1, n2, ans = -1;
-    cin >> n1 >> n2;
-    cout << kthAncestor(tree.root, n1, n2, ans) << "\n";
-    cout << n2 << " " << ans << "\n";
+    cout << isBST(tree.root);
 }
