@@ -37,6 +37,27 @@ public:
     Node *root;
     bst(Node *root = NULL) : root(root), nodes(0) {}
     int number_of_nodes() { return nodes; }
+    //Todo : construct a binary tree from preorder traversal
+    // Node *constructBSTPre(int *pre, int &preIdx, int low, int high, int N)
+    // {
+    //     if (preIdx >= N || low > high)
+    //         return NULL;
+    //     cout << pre[preIdx] << " ";
+    //     Node *node = new Node(pre[preIdx]);
+    //     preIdx += 1;
+    //     if (low == high)
+    //         return node;
+    //     int mid = low;
+    //     while (mid <= high)
+    //     {
+    //         if (pre[mid] > node->data)
+    //             break;
+    //         mid++;
+    //     }
+    //     node->left = constructBSTPre(pre, preIdx, low, mid - 1, N);
+    //     node->right = constructBSTPre(pre, preIdx, mid, high, N);
+    //     return node;
+    // }
 
     void insert(int data)
     {
@@ -47,7 +68,10 @@ public:
     void lot()
     {
         if (!root)
+        {
+            cout << "empty bst\n";
             return;
+        }
         Node *tmp;
         queue<Node *> q;
         q.push(root);
@@ -162,24 +186,17 @@ Node *LCA(Node *root, int n1, int n2)
     else
         return LCA(root->left, n1, n2);
 }
+
 int main()
 {
     int n;
     cin >> n;
     bst tree;
-    while (n--)
-    {
-        int data;
-        cin >> data;
-        tree.insert(data);
-    }
-    cout << tree.number_of_nodes() << "\n";
+    int pre[n];
+    for (int &i : pre)
+        cin >> i;
+    int idx;
     tree.lot();
-    tree.root = deleteNode(tree.root, 1);
-    tree.lot();
-    Node *lca = LCA(tree.root, 18, 55);
-    cout << lca->data << " ";
-
     // Node *pre = NULL, *suc = NULL;
     // findPreSuc(tree.root, pre, suc, 40);
     // if (pre)

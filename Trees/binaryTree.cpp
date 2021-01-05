@@ -10,6 +10,26 @@ public:
     Node(int data, Node *left = NULL, Node *right = NULL) : data(data), left(left), right(right) {}
 };
 
+// Binary Tree to Binary Search Tree Conversion
+void toBSTUtil(Node *root, int *inorder, int size, int &idx)
+{
+    if (!root || idx >= size)
+        return;
+    toBSTUtil(root->left, inorder, size, idx);
+    (root)->data = inorder[idx++];
+    toBSTUtil(root->right, inorder, size, idx);
+}
+void getInorder(Node *root, int inorder[], int n)
+{
+    static int pos = 0;
+    if (!root)
+        return;
+    if (pos >= n)
+        return;
+    getInorder(root->left, inorder, n);
+    inorder[pos++] = root->data;
+    getInorder(root->right, inorder, n);
+}
 class bt
 {
     int nodes;
@@ -370,6 +390,15 @@ public:
         leafNodes(root->right);
         rightBoundary(root->right);
     }
+
+    void toBST()
+    {
+        int *inorder = new int[nodes]{0};
+        getInorder(root, inorder, nodes);
+        sort(inorder, inorder + nodes);
+        int idx = 0;
+        toBSTUtil(root, inorder, nodes, idx);
+    }
 };
 bool search(Node *root, int data)
 {
@@ -591,17 +620,6 @@ Node *buildTreeUsingIP(int in[], int pre[], int is, int ie, int n)
     return newNode;
 }
 
-void getInorder(Node *root, int inorder[], int n)
-{
-    static int pos = 0;
-    if (!root)
-        return;
-    if (pos >= n)
-        return;
-    getInorder(root->left, inorder, n);
-    inorder[pos++] = root->data;
-    getInorder(root->right, inorder, n);
-}
 int minSwaps(Node *root, int n)
 {
     int bt[n];
@@ -817,5 +835,6 @@ int main()
         cin >> data;
         tree.insert(data);
     }
-    cout << isBST(tree.root);
+    tree.toBST();
+    tree.inorder();
 }
