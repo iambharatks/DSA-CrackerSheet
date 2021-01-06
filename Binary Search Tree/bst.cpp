@@ -79,6 +79,26 @@ public:
         root = BSTfromPre(pre, idx, pre[idx], INT_MIN, INT_MAX);
     }
 
+    void inorder()
+    {
+        stack<Node *> s;
+        Node *tmp = root;
+        while (true)
+        {
+            while (tmp)
+            {
+                s.push(tmp);
+                tmp = tmp->left;
+            }
+            if (s.empty())
+                return;
+            tmp = s.top();
+            s.pop();
+            cout << tmp->data << " ";
+            tmp = tmp->right;
+        }
+        cout << '\n';
+    }
     void insert(int data)
     {
         if (search(&root, data))
@@ -293,23 +313,86 @@ Node *LCA(Node *root, int n1, int n2)
         return LCA(root->left, n1, n2);
 }
 
+int getCount(Node *root, int l, int h)
+{
+    static int cnt = 0;
+    if (!root)
+        return cnt;
+    if (root->data >= l && root->data <= h)
+        cnt++;
+    if (root->data > l)
+    {
+        getCount(root->left, l, h);
+    }
+    if (root->data < h)
+    {
+        getCount(root->right, l, h);
+    }
+    return cnt;
+}
+// Brothers From Different Roots
+int countPairs(Node *root1, Node *root2, int x)
+{
+    if (root1 == NULL || root2 == NULL)
+        return 0;
+    stack<Node *> st1, st2;
+    Node *top1, *top2;
+    int count = 0;
+    while (true)
+    {
+        while (root1 != NULL)
+        {
+            st1.push(root1);
+            root1 = root1->left;
+        }
+        while (root2 != NULL)
+        {
+            st2.push(root2);
+            root2 = root2->right;
+        }
+        if (st1.empty() || st2.empty())
+            break;
+        top1 = st1.top();
+        top2 = st2.top();
+        cout << top1->data << " " << top2->data << "\n";
+        if ((top1->data + top2->data) == x)
+        {
+            count++;
+            st1.pop();
+            st2.pop();
+            root1 = top1->right;
+            root2 = top2->left;
+        }
+        else if ((top1->data + top2->data) < x)
+        {
+            st1.pop();
+            root1 = top1->right;
+        }
+        else
+        {
+            st2.pop();
+            root2 = top2->left;
+        }
+    }
+    return count;
+}
 int main()
 {
-    int n;
+    int n, data;
     cin >> n;
-    bst tree, balancedTree;
-    vector<int> pre(n);
-    for (int &i : pre)
-        cin >> i;
-    int idx = 0;
-    tree.constructBSTfromPre(pre);
-    tree.lot();
-    cout << tree.height() << "\n";
-    balancedTree.balancedBST(pre);
-    balancedTree.lot();
-    cout << balancedTree.height() << "\n";
-    cout << tree.KthSmallestElement(1) << '\n';
-    cout << balancedTree.kthLargest(2);
+    bst t1, t2;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> data;
+        t1.insert(data);
+    }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> data;
+    //     t2.insert(data);
+    // }
+    t1.lot();
+    cout << getCount(t1.root, 7, 9);
     // Node *pre = NULL, *suc = NULL;
     // findPreSuc(tree.root, pre, suc, 40);
     // if (pre)
