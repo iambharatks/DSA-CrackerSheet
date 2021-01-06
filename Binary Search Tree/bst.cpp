@@ -37,27 +37,47 @@ public:
     Node *root;
     bst(Node *root = NULL) : root(root), nodes(0) {}
     int number_of_nodes() { return nodes; }
-    //Todo : construct a binary tree from preorder traversal
-    // Node *constructBSTPre(int *pre, int &preIdx, int low, int high, int N)
-    // {
-    //     if (preIdx >= N || low > high)
-    //         return NULL;
-    //     cout << pre[preIdx] << " ";
-    //     Node *node = new Node(pre[preIdx]);
-    //     preIdx += 1;
-    //     if (low == high)
-    //         return node;
-    //     int mid = low;
-    //     while (mid <= high)
-    //     {
-    //         if (pre[mid] > node->data)
-    //             break;
-    //         mid++;
-    //     }
-    //     node->left = constructBSTPre(pre, preIdx, low, mid - 1, N);
-    //     node->right = constructBSTPre(pre, preIdx, mid, high, N);
-    //     return node;
-    // }
+    void preorder()
+    {
+        stack<Node *> s;
+        Node *tmp = root;
+        while (true)
+        {
+            while (tmp)
+            {
+                cout << tmp->data << " ";
+                s.push(tmp);
+                tmp = tmp->left;
+            }
+            if (s.empty())
+                return;
+            tmp = s.top();
+            s.pop();
+            tmp = tmp->right;
+        }
+    }
+
+    Node *BSTfromPre(vector<int> pre, int &preIdx, int key, int min, int max)
+    {
+        if (preIdx >= pre.size())
+            return NULL;
+        Node *newNode = NULL;
+        if (key > min && key < max)
+        {
+            newNode = new Node(key);
+            preIdx++;
+            if (preIdx < pre.size())
+                newNode->left = BSTfromPre(pre, preIdx, pre[preIdx], min, key);
+            if (preIdx < pre.size())
+                newNode->right = BSTfromPre(pre, preIdx, pre[preIdx], key, max);
+        }
+        return newNode;
+    }
+    void constructBSTfromPre(vector<int> pre)
+    {
+        int idx = 0;
+        root = BSTfromPre(pre, idx, pre[idx], INT_MIN, INT_MAX);
+    }
 
     void insert(int data)
     {
@@ -104,6 +124,92 @@ public:
         while (current && current->right)
             current = current->right;
         return current->data;
+    }
+    int height()
+    {
+        queue<Node *> q;
+        int level = 0;
+        if (!root)
+            return level;
+        q.push(root);
+        q.push(NULL);
+        while (!q.empty())
+        {
+            root = q.front();
+            q.pop();
+            if (root == NULL)
+            {
+                if (!q.empty())
+                    q.push(NULL);
+                level++;
+            }
+            else
+            {
+                if (root->left)
+                    q.push(root->left);
+                if (root->right)
+                    q.push(root->right);
+            }
+        }
+        return level;
+    }
+    Node *balancedBSTUtil(vector<int> sorted_array, int low, int high)
+    {
+        if (low > high)
+            return NULL;
+        int mid = low + (high - low) / 2;
+        Node *newNode = new Node(sorted_array[mid]);
+        if (high == low)
+            return newNode;
+        newNode->left = balancedBSTUtil(sorted_array, low, mid - 1);
+        newNode->right = balancedBSTUtil(sorted_array, mid + 1, high);
+        return newNode;
+    }
+    void balancedBST(vector<int> array)
+    {
+        sort(array.begin(), array.end());
+        root = balancedBSTUtil(array, 0, array.size() - 1);
+    }
+
+    void kthLargestUtil(Node *root, int k, int &cnt, int &ans)
+    {
+        if (!root || cnt == k)
+            return;
+        kthLargestUtil(root->right, k, cnt, ans);
+        cnt++;
+        if (cnt == k)
+        {
+            ans = root->data;
+            return;
+        }
+        kthLargestUtil(root->left, k, cnt, ans);
+    }
+    int kthLargest(int K)
+    {
+        int ans = INT8_MAX, cnt = 0;
+        kthLargestUtil(root, K, cnt, ans);
+        return (ans == INT8_MAX) ? -1 : ans;
+    }
+
+    void kthSmallestElementUtil(Node *root, int k, int &cnt, int &ans)
+    {
+        if (!root || cnt == k)
+            return;
+        kthSmallestElementUtil(root->left, k, cnt, ans);
+        cnt++;
+        if (cnt == k)
+        {
+            ans = root->data;
+            return;
+        }
+        kthSmallestElementUtil(root->right, k, cnt, ans);
+    }
+    int KthSmallestElement(int K)
+    {
+        //Your code here
+        int ans = INT8_MIN, cnt = 0;
+        kthSmallestElementUtil(root, K, cnt, ans);
+        return (ans == INT8_MIN) ? -1 : ans;
     }
 };
 Node *minValueNode(Node *root)
@@ -191,12 +297,19 @@ int main()
 {
     int n;
     cin >> n;
-    bst tree;
-    int pre[n];
+    bst tree, balancedTree;
+    vector<int> pre(n);
     for (int &i : pre)
         cin >> i;
-    int idx;
+    int idx = 0;
+    tree.constructBSTfromPre(pre);
     tree.lot();
+    cout << tree.height() << "\n";
+    balancedTree.balancedBST(pre);
+    balancedTree.lot();
+    cout << balancedTree.height() << "\n";
+    cout << tree.KthSmallestElement(1) << '\n';
+    cout << balancedTree.kthLargest(2);
     // Node *pre = NULL, *suc = NULL;
     // findPreSuc(tree.root, pre, suc, 40);
     // if (pre)
