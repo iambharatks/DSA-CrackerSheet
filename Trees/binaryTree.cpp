@@ -19,6 +19,7 @@ void toBSTUtil(Node *root, int *inorder, int size, int &idx)
     (root)->data = inorder[idx++];
     toBSTUtil(root->right, inorder, size, idx);
 }
+
 void getInorder(Node *root, int inorder[], int n)
 {
     static int pos = 0;
@@ -30,6 +31,7 @@ void getInorder(Node *root, int inorder[], int n)
     inorder[pos++] = root->data;
     getInorder(root->right, inorder, n);
 }
+
 class bt
 {
     int nodes;
@@ -400,6 +402,7 @@ public:
         toBSTUtil(root, inorder, nodes, idx);
     }
 };
+
 bool search(Node *root, int data)
 {
     if (!root)

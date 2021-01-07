@@ -232,6 +232,7 @@ public:
         return (ans == INT8_MIN) ? -1 : ans;
     }
 };
+
 Node *minValueNode(Node *root)
 {
     Node *current = root;
