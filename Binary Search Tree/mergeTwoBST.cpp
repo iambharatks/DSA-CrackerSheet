@@ -181,8 +181,8 @@ public:
         }
     }
 };
-//O(n)
-//1. Method
+
+//First Method O(n)
 //1.get inorders of tree1 and tree2 : O(n)
 //2.merge two inorder in sorted form(gap method) : O(n)
 //3.create balanced bst using that sorted merged array : O(n)
@@ -222,6 +222,113 @@ void mergeBST(bst tree1, bst tree2, bst &mergedTree)
     mergedTree = tree;
 }
 
+//Second Method
+//1.convert both trees into dll //O(n)
+//2.merge two dll in sorted form //O(n)
+//3.convert merged sorted dll inot balanced bst //O(n)
+//This method is inplace
+void printDll(Node *root)
+{
+    cout << "printing dll\n";
+    for (; root->right; root = root->right)
+        cout << root->data << " ";
+    cout << root->data << " ";
+    cout << endl;
+    for (; root->left; root = root->left)
+        cout << root->data << " ";
+    cout << root->data << " ";
+    cout << endl;
+}
+Node *dllToBST(Node **headref, int n)
+{
+    if (n <= 0)
+        return NULL;
+    Node *left = dllToBST(headref, n / 2);
+    Node *root = *headref;
+    root->left = left;
+    *headref = (*headref)->right;
+    root->right = dllToBST(headref, n - n / 2 - 1);
+    return root;
+}
+void mergeSortedDll(Node *head1, Node *head2, Node **head)
+{
+    Node *prev = NULL;
+    while (head1 && head2)
+    {
+        if (head1->data <= head2->data)
+        {
+            if (prev)
+            {
+                prev->right = head1;
+                head1->left = prev;
+            }
+            else
+                *head = head1;
+            prev = head1;
+            head1 = head1->right;
+        }
+        else
+        {
+            if (prev)
+            {
+                prev->right = head2;
+                head2->left = prev;
+            }
+            else
+                *head = head2;
+            prev = head2;
+            head2 = head2->right;
+        }
+    }
+    if (head1)
+    {
+        if (prev)
+        {
+            prev->right = head1;
+            head1->left = prev;
+        }
+        else
+            *head = head1;
+        return;
+    }
+    if (head2)
+    {
+        if (prev)
+        {
+            prev->right = head2;
+            head2->left = prev;
+        }
+        else
+            *head = head2;
+        prev = head2;
+    }
+}
+void treeToDll(Node *root, Node **head)
+{
+    if (!root)
+        return;
+    treeToDll(root->right, head);
+    root->right = *head;
+    if ((*head) != NULL)
+        (*head)->left = root;
+    *head = root;
+    treeToDll(root->left, head);
+}
+void mergeBSTs(bst &tree1, bst &tree2)
+{
+    Node *head1 = NULL, *head2 = NULL;
+    treeToDll(tree1.root, &head1);
+    treeToDll(tree2.root, &head2);
+    printDll(head1);
+    printDll(head2);
+    Node *head = NULL;
+    mergeSortedDll(head1, head2, &head);
+    printDll(head);
+    int n = tree1.number_of_nodes() + tree2.number_of_nodes();
+    head = dllToBST(&head, n);
+    bst tree(head, n);
+    tree1 = tree;
+}
 
 int main()
 {
@@ -239,7 +346,8 @@ int main()
         cin >> data;
         tree2.insert(data);
     }
-    mergeBST(tree1, tree2, mergedTree);
-    mergedTree.inorder();
-    mergedTree.preorder();
+    mergeBSTs(tree1, tree2);
+    cout << "printing Merged Tree\n";
+    tree1.inorder();
+    tree1.preorder();
 }
