@@ -131,7 +131,7 @@ public:
             current = current->right;
         return current->data;
     }
-    
+
     int height()
     {
         queue<Node *> q;
@@ -181,7 +181,12 @@ public:
         }
     }
 };
-//O(n) Approach
+//O(n)
+//1. Method
+//1.get inorders of tree1 and tree2 : O(n)
+//2.merge two inorder in sorted form(gap method) : O(n)
+//3.create balanced bst using that sorted merged array : O(n)
+//This approach is not inplace merging
 void mergeSortedArray(vector<int> &inorder)
 {
     int gap = inorder.size();
@@ -216,6 +221,7 @@ void mergeBST(bst tree1, bst tree2, bst &mergedTree)
     bst tree(balancedBSTFromSorted(inorder, 0, size - 1), size);
     mergedTree = tree;
 }
+
 
 int main()
 {
