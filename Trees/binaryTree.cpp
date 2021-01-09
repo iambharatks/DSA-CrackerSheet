@@ -401,6 +401,37 @@ public:
         int idx = 0;
         toBSTUtil(root, inorder, nodes, idx);
     }
+
+    //MORRIS INORDER TRAVERSAL
+    void morrisInorderTraversal()
+    {
+        Node *current = root, *pred = NULL;
+        while (current)
+        {
+            if (!current->left)
+            {
+                cout << current->data << " ";
+                current = current->right;
+            }
+            else
+            {
+                pred = current->left;
+                while (pred->right != NULL && pred->right != current)
+                    pred = pred->right;
+                if (pred->right == NULL)
+                {
+                    pred->right = current;
+                    current = current->left;
+                }
+                else
+                {
+                    pred->right = NULL;
+                    cout << current->data << " ";
+                    current = current->right;
+                }
+            }
+        }
+    }
 };
 
 bool search(Node *root, int data)
@@ -838,6 +869,8 @@ int main()
         cin >> data;
         tree.insert(data);
     }
+    tree.morrisInorderTraversal();
     tree.toBST();
-    tree.inorder();
+    tree.morrisInorderTraversal();
+    // tree.inorder();
 }
