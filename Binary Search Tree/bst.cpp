@@ -231,6 +231,51 @@ public:
         kthSmallestElementUtil(root, K, cnt, ans);
         return (ans == INT8_MIN) ? -1 : ans;
     }
+    int findMedian()
+    {
+        if (!root)
+            return 0;
+        if (nodes == 1)
+            return root->data;
+        int curCnt = 0;
+        Node *current = root, *prev = NULL, *pred = NULL;
+        while (current)
+        {
+            if (!current->left)
+            {
+                curCnt++;
+                if ((nodes & 1) == 0 && curCnt == (nodes / 2 + 1))
+                    return (prev->data + current->data) / 2;
+                else if ((nodes & 1) && curCnt == (nodes + 1) / 2)
+                    return current->data;
+                prev = current;
+                current = current->right;
+            }
+            else
+            {
+                pred = current->right;
+                while (pred->right != NULL && pred->right != current)
+                    pred = pred->right;
+                if (pred->right)
+                {
+                    pred->right = NULL;
+                    curCnt++;
+                    if ((nodes & 1) == 0 && curCnt == (nodes / 2 + 1))
+                        return (prev->data + current->data) / 2;
+                    else if ((nodes & 1) && curCnt == (nodes + 1) / 2)
+                        return current->data;
+                    prev = current;
+                    current = current->right;
+                }
+                else
+                {
+                    pred->right == current;
+                    current = current->left;
+                }
+            }
+        }
+        return -1;
+    }
 };
 
 Node *minValueNode(Node *root)
@@ -393,7 +438,8 @@ int main()
     //     t2.insert(data);
     // }
     t1.lot();
-    cout << getCount(t1.root, 7, 9);
+    // cout << getCount(t1.root, 7, 9);
+    cout << t1.findMedian() << "\n";
     // Node *pre = NULL, *suc = NULL;
     // findPreSuc(tree.root, pre, suc, 40);
     // if (pre)

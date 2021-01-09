@@ -180,6 +180,7 @@ public:
             node = node->right;
         }
     }
+
 };
 
 //First Method O(n)
@@ -350,4 +351,5 @@ int main()
     cout << "printing Merged Tree\n";
     tree1.inorder();
     tree1.preorder();
+
 }
