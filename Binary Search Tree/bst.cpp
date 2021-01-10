@@ -422,6 +422,7 @@ int countPairs(Node *root1, Node *root2, int x)
     }
     return count;
 }
+
 int main()
 {
     int n, data;
