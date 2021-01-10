@@ -25,12 +25,12 @@ void rateInMaze(int m[MAX][MAX], int x, int y, int n, vector<string> &paths, str
     m[x][y] = 0;
     //down
     rateInMaze(m, x + 1, y, n, paths, path + 'D');
-    //up
-    rateInMaze(m, x - 1, y, n, paths, path + 'U');
     //left
     rateInMaze(m, x, y - 1, n, paths, path + 'L');
     //right
     rateInMaze(m, x, y + 1, n, paths, path + 'R');
+    //up
+    rateInMaze(m, x - 1, y, n, paths, path + 'U');
     m[x][y] = 1;
 }
 vector<string> findPath(int m[MAX][MAX], int n)
