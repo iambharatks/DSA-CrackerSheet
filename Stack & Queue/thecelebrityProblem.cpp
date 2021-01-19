@@ -25,6 +25,7 @@ public:
         // +1 for 1-based indexing
         return (celebrity == -1) ? -1 : celebrity + 1;
     }
+    
     //optimal Solution Using Stack
     //Time Complexity := O(n)
     //Space Complexity := O(n)
