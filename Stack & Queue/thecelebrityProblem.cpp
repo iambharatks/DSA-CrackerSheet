@@ -23,7 +23,61 @@ public:
                 celebrity = i, maxFollowers = followers[i];
         }
         // +1 for 1-based indexing
-        return celebrity + 1;
+        return (celebrity == -1) ? -1 : celebrity + 1;
+    }
+    //optimal Solution Using Stack
+    //Time Complexity := O(n)
+    //Space Complexity := O(n)
+    int celebrityUsingStack(vector<vector<int>> &M, int n)
+    {
+        stack<int> s;
+        for (int i = 0; i < n; i++)
+            s.push(i);
+        int a, b;
+        while (s.size() > 1)
+        {
+            a = s.top();
+            s.pop();
+            b = s.top();
+            s.pop();
+            if (M[a][b])
+                s.push(b);
+            else
+                s.push(a);
+        }
+        if (s.empty())
+            return -1;
+        int c = s.top();
+        s.pop();
+        for (int i = 0; i < n; i++)
+        {
+            if (i != c)
+                if (M[c][i] || !M[i][c])
+                    return -1;
+        }
+        return c;
+    }
+
+    //Optimnal Solution
+    //Time Complexity := O(n)
+    //Space Complexity := O(1)
+    int celebrity(vector<vector<int>> &M, int n)
+    {
+        int a = 0, b = n - 1;
+        while (a < b)
+        {
+            if (M[a][b])
+                a++;
+            else
+                b--;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            if (i != a)
+                if (M[a][i] || !M[i][a])
+                    return -1;
+        }
+        return a;
     }
 };
 
@@ -35,5 +89,5 @@ int main()
     for (auto &v : M)
         for (auto &i : v)
             cin >> i;
-    cout << Solution().graphSolution(M);
+    cout << Solution().celebrity(M, n);
 }
