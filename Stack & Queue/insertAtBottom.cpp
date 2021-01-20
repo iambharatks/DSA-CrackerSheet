@@ -3,7 +3,7 @@
 using namespace std;
 
 //Insert an element at its bottom without using any other datastructure
-
+//Time Complexity is O(n*n)
 void insertAtBottom(stack<int> &s, int new_element)
 {
     if (s.empty())
