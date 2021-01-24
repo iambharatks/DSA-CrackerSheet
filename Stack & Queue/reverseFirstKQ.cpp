@@ -27,6 +27,15 @@ queue<int> modifyQueue(queue<int> q, int k)
     }
     return q;
 }
+void print(queue<int> q)
+{
+    while (!q.empty())
+    {
+        cout << q.front() << " ";
+        q.pop();
+    }
+    cout << "\n";
+}
 int main()
 {
     int n, k;
@@ -38,7 +47,9 @@ int main()
         cin >> data;
         q.push(data);
     }
-    
     queue<int> newQ = modifyQueue(q, k);
-
+    cout << "Original Queue\n";
+    print(q);
+    cout << "K reverse Queue\n";
+    print(newQ);
 }
