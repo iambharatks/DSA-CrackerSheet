@@ -3,7 +3,7 @@
 using namespace std;
 
 // Next Greater Element
-// not in same orer of input
+// not in same order of input
 void nextLargerElement(vector<long long> arr)
 {
     stack<long long> s;
