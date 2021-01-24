@@ -62,6 +62,28 @@ int getMinDiff(int arr[], int n, int k)
     }
     return ans;
 }
+int minDif(int arr[], int n, int k)
+{
+    sort(arr, arr + n);
+    int small = arr[0] + k;
+    int big = arr[n - 1] - k;
+    int ans = arr[n - 1] - arr[0];
+    if (small > big)
+        swap(small, big);
+    for (int i = 1; i < n - 1; i++)
+    {
+        int subt = arr[i] - k;
+        int add = arr[i] + k;
+        if (add <= big && subt >= small)
+            continue;
+        if (big - add < small - subt)
+            big = add;
+        else
+            small = subt;
+        ans = min(ans, big - small);
+    }
+    return ans;
+}
 int main()
 {
     int n, k;
@@ -70,6 +92,6 @@ int main()
     int min = INT_MAX, max = 0;
     for (int &i : arr)
         cin >> i;
-    cout << getMinDiff(arr,n, k) << "\n";
+    cout << getMinDiff(arr, n, k) << "\n";
     return 0;
 }
