@@ -31,7 +31,9 @@ void printFirstNegativeNumber(vector<int> a, int k)
         cout << 0 << " ";
     cout << "\n";
 }
-
+//best Approach
+//Time complexity := O(n)
+//Space Complexity := O(1)
 void printFirstNeg(vector<int> a, int k)
 {
     int firstNegPos = 0;
