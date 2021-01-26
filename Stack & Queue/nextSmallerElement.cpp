@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// Next Smaller Element
+
 //Not in order
 void nextSmaller(vector<long long> a)
 {
