@@ -3,28 +3,49 @@
 using namespace std;
 #define MAX 1000
 
-int maxArea(int M[MAX][MAX], int n, int m)
+int maxAreaRow(int arr[], int n)
 {
-    if (n == 0 || m == 0)
-        return -1;
-    vector<vector<int>> dp(n, vector<int>(m));
-    int ans = 0;
-    for (int i = 0; i < n; i++)
-        dp[i][0] = M[i][0];
-    for (int i = 0; i < m; i++)
-        dp[0][i] = M[0][i];
-    for (int i = 1; i < n; i++)
+    stack<int> h;
+    int i = 0;
+    int maxArea = 0;
+    while (i < n)
     {
-        for (int j = 1; j < m; j++)
+        if (h.empty() || arr[h.top()] <= arr[i])
+            h.push(i++);
+        else
         {
-            if (M[i][j] == 1)
-                dp[i][j] = min(dp[i - 1][j], min(dp[i][j - 1], dp[i - 1][j - 1])) + 1;
-            else
-                dp[i][j] = 0;
-            ans = max(ans, dp[i][j]);
+            int tp = h.top();
+            h.pop();
+            int areaForTp = arr[tp] * ((h.empty()) ? i : i - h.top() - 1);
+            maxArea = (maxArea < areaForTp) ? areaForTp : maxArea;
         }
     }
-    return ans * ans;
+    while (!h.empty())
+    {
+        int tp = h.top();
+        h.pop();
+        int areaForTp = arr[tp] * ((h.empty()) ? i : i - h.top() - 1);
+        maxArea = (maxArea < areaForTp) ? areaForTp : maxArea;
+    }
+    return maxArea;
+}
+
+int maxArea(int M[MAX][MAX], int n, int m)
+{
+    int maxAreaRec = 0, curArea = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (i != 0 && M[i][j])
+                M[i][j] += M[i - 1][j];
+            cout << M[i][j] << " ";
+        }
+        curArea = maxAreaRow(M[i], m);
+        cout << " == " << curArea << '\n';
+        maxAreaRec = (maxAreaRec < curArea) ? curArea : maxAreaRec;
+    }
+    return maxAreaRec;
 }
 
 int main()
