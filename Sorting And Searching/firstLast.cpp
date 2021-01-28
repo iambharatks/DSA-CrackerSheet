@@ -6,42 +6,40 @@ using namespace std;
 int lowerBound(vector<int> a, int target)
 {
     int low = 0, high = a.size() - 1;
+    int idx = -1;
     while (low <= high)
     {
         int mid = low + (high - low) / 2;
-        if (a[mid] == target)
+        if (a[mid] >= target)
         {
-            if (mid > 0 && a[mid - 1] == target)
-                high--;
-            else
-                return mid;
-        }
-        else if (a[mid] > target)
+            idx = mid;
             high = mid - 1;
+        }
         else
             low = mid + 1;
     }
-    return -1;
+    if (idx != -1 && a[idx] != target)
+        return -1;
+    return idx;
 }
 int upperBound(vector<int> a, int target)
 {
     int low = 0, high = a.size() - 1;
+    int idx = high + 1;
     while (low <= high)
     {
         int mid = low + (high - low) / 2;
-        if (a[mid] == target)
+        if (a[mid] <= target)
         {
-            if (mid < a.size() - 1 && a[mid + 1] == target)
-                low++;
-            else
-                return mid;
-        }
-        else if (a[mid] > target)
-            high = mid - 1;
-        else
+            idx = mid;
             low = mid + 1;
+        }
+        else
+            high = mid - 1;
     }
-    return -1;
+    if (idx != high + 1 && a[idx] < target)
+        return -1;
+    return idx;
 }
 int main()
 {
