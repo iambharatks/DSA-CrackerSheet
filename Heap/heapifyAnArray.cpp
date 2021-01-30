@@ -106,10 +106,10 @@ public:
             resizeHeap();
         size++;
         int i = size - 1;
-        while (i > 0 && cmp(newElement, arr[(i - 1) / 2]))
+        while (i > 0 && cmp(newElement, arr[parent(i)]))
         {
-            arr[i] = arr[(i - 1) / 2];
-            i = (i - 1) / 2;
+            arr[i] = arr[parent(i)];
+            i = parent(i);
         }
         arr[i] = newElement;
     }
