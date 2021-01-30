@@ -44,7 +44,7 @@ int main()
     int arr[n];
     for (int &i : arr)
         cin >> i;
-    heapify(arr, n, maxHeap);
+    heapify(arr, n, minHeap);
     for (int &i : arr)
         cout << i << " ";
 }

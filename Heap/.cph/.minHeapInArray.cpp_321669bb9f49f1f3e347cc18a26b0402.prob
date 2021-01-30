@@ -1,1 +1,1 @@
-{"name":"Local: minHeapInArray","url":"d:\\DSA Sheet\\Heap\\minHeapInArray.cpp","tests":[{"id":1611984371964,"input":"10\n1 3 2 4 5 2 1 3 4 0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA Sheet\\Heap\\minHeapInArray.cpp","group":"local","local":true}
+{"name":"Local: minHeapInArray","url":"d:\\DSA Sheet\\Heap\\minHeapInArray.cpp","tests":[],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA Sheet\\Heap\\minHeapInArray.cpp","group":"local","local":true}
