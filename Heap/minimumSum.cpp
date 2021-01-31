@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
+// Minimum sum
 class Solution
 {
 public:
