@@ -41,9 +41,27 @@ public:
         cout << '\n';
     }
     //Time Complexity := O(V+E)
-    void bfs(T src, T end)
+    void bfs(T src)
     {
-        
+        map<T, bool> visited;
+        queue<T> q;
+        q.push(src);
+        visited[src] = true;
+        while (!q.empty())
+        {
+            T v = q.front();
+            q.pop();
+            cout << v << " -> ";
+            for (T neigh : adj[v])
+            {
+                if (!visited[neigh])
+                {
+                    visited[neigh] = true;
+                    q.push(neigh);4
+                }
+            }
+        }
+        cout << '\n';
     }
 };
 
@@ -70,6 +88,11 @@ int main()
             cout << "Enter source\n";
             cin >> u;
             g.dfs(u);
+            break;
+        case 4:
+            cout << "Enter source\n";
+            cin >> u;
+            g.bfs(u);
             break;
         case 0:
             cout << "Quiting...\n";
