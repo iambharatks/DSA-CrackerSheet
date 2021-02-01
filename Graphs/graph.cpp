@@ -25,6 +25,26 @@ public:
             cout << "\n";
         }
     }
+    void dfsUtil(T src, unordered_map<T, bool> &visited)
+    {
+        visited[src] = true;
+        cout << src << " -> ";
+        for (auto neigh : adj[src])
+            if (!visited[neigh])
+                dfsUtil(neigh, visited);
+    }
+    //Time Complexity := O(V+E)
+    void dfs(T src)
+    {
+        unordered_map<T, bool> visited;
+        dfsUtil(src, visited);
+        cout << '\n';
+    }
+    //Time Complexity := O(V+E)
+    void bfs(T src, T end)
+    {
+        
+    }
 };
 
 int main()
@@ -45,6 +65,11 @@ int main()
             break;
         case 2:
             g.print();
+            break;
+        case 3:
+            cout << "Enter source\n";
+            cin >> u;
+            g.dfs(u);
             break;
         case 0:
             cout << "Quiting...\n";
