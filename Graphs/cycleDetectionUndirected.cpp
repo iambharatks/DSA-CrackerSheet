@@ -4,19 +4,18 @@ using namespace std;
 //cycle detection in undirected Graphs
 //using BFS
 //using DFS
+
+//undirected graph
 template <typename T>
 class Graph
 {
     map<T, list<T>> adj;
-    bool bidir;
 
 public:
-    Graph(bool bidir) : bidir(bidir) {}
     void addEdge(T u, T v)
     {
         adj[u].push_back(v);
-        if (bidir)
-            adj[v].push_back(u);
+        adj[v].push_back(u);
     }
     void print()
     {
@@ -96,7 +95,7 @@ public:
 
 int main()
 {
-    Graph<char> g(true);
+    Graph<char> g;
     int choice = 1;
     char u, v;
     int edges;

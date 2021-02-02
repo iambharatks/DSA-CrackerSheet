@@ -1,19 +1,23 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+//Detect cycle in a directed graph
+// using DFS
+// To detect a back edge,
+//  keep track of vertices currently in the recursion stack of function for DFS traversal.
+//  If a vertex is reached that is already in the recursion stack,
+//  then there is a cycle in the tree.
+
+//directed graph
 template <typename T>
 class Graph
 {
     map<T, list<T>> adj;
-    bool bidir;
 
 public:
-    Graph(bool bidir) : bidir(bidir) {}
     void addEdge(T u, T v)
     {
         adj[u].push_back(v);
-        if (bidir)
-            adj[v].push_back(u);
     }
     void print()
     {
@@ -25,20 +29,31 @@ public:
             cout << "\n";
         }
     }
-    void dfsUtil(T src, unordered_map<T, bool> &visited)
+    bool dfsUtil(T src, unordered_map<T, bool> &visited, unordered_map<T, bool> &reStack)
     {
         visited[src] = true;
-        cout << src << " -> ";
-        for (auto neigh : adj[src])
-            if (!visited[neigh])
-                dfsUtil(neigh, visited);
+        reStack[src] = true;
+        for (T neigh : adj[src])
+        {
+            if (!visited[neigh] && dfsUtil(neigh, visited, reStack))
+                return true;
+            else if (reStack[neigh])
+                return true;
+        }
+        reStack[src] = false;
+        return false;
     }
     //Time Complexity := O(V+E)
-    void dfs(T src)
+    bool hasCycleDFS()
     {
         unordered_map<T, bool> visited;
-        dfsUtil(src, visited);
-        cout << '\n';
+        unordered_map<T, bool> reStack;
+        for (auto v : adj)
+        {
+            if (!visited[v.first] && dfsUtil(v.first, visited, reStack))
+                return true;
+        }
+        return false;
     }
     //Time Complexity := O(V+E)
     void bfs(T src)
@@ -67,41 +82,16 @@ public:
 
 int main()
 {
-    Graph<char> g(false);
+    Graph<char> g;
     int choice = 1;
     char u, v;
-    while (choice)
+    int edges;
+    cin >> edges;
+    while (edges--)
     {
-        cout << "Select your choice\n\t1.add edge\n\t2.print graph\n\t3.dfs\n\t4.bfs\n\t0.Quite\n";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            cout << "Enter vertices\n";
-            cin >> u >> v;
-            g.addEdge(u, v);
-            break;
-        case 2:
-            g.print();
-            break;
-        case 3:
-            cout << "Enter source\n";
-            cin >> u;
-            g.dfs(u);
-            break;
-        case 4:
-            cout << "Enter source\n";
-            cin >> u;
-            g.bfs(u);
-            break;
-        case 0:
-            cout << "Quiting...\n";
-        }
+        cin >> u >> v;
+        g.addEdge(u, v);
     }
+    g.print();
+    cout << g.hasCycleDFS();
 }
-// 1 A B
-// 1 B C
-// 1 D A
-// 1 D B
-// 1 C C
-// 1 B D
