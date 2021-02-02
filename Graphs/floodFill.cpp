@@ -28,8 +28,23 @@ public:
         int oldColor = image[sr][sc];
         if (oldColor == newColor)
             return image;
-        dfs(sr, sc, oldColor, newColor, image, visited);
+        dfsNew(image, sr, sc, oldColor, newColor);
         return image;
+    }
+    void dfsNew(vector<vector<int>> &image, int r, int c, int color, int newColor)
+    {
+        if (image[r][c] == color)
+        {
+            image[r][c] = newColor;
+            if (r >= 1)
+                dfsNew(image, r - 1, c, color, newColor);
+            if (c >= 1)
+                dfsNew(image, r, c - 1, color, newColor);
+            if (r + 1 < image.size())
+                dfsNew(image, r + 1, c, color, newColor);
+            if (c + 1 < image[0].size())
+                dfsNew(image, r, c + 1, color, newColor);
+        }
     }
 };
 int main()
@@ -38,6 +53,7 @@ int main()
     cin >> n >> m;
     vector<vector<int>> image(n, vector<int>(m, 0));
     for (auto &v : image)
+
         for (int &i : v)
             cin >> i;
     int sr, sc, newColor;
