@@ -63,34 +63,6 @@ public:
         }
         cout << '\n';
     }
-    bool cycleBFS(T src)
-    {
-        if (!bidir)
-        {
-            map<T, bool> visited;
-            queue<T> q;
-            q.push(src);
-            visited[src] = true;
-            while (!q.empty())
-            {
-                T v = q.front();
-                q.pop();
-                cout << v << " -> ";
-                for (T neigh : adj[v])
-                {
-                    if (!visited[neigh])
-                    {
-                        visited[neigh] = true;
-                        q.push(neigh);
-                    }
-                    else
-                        return true;
-                }
-            }
-            return false;
-        }
-        return true;
-    }
 };
 
 int main()
