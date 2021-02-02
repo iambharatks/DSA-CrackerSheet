@@ -57,17 +57,45 @@ public:
                 if (!visited[neigh])
                 {
                     visited[neigh] = true;
-                    q.push(neigh);4
+                    q.push(neigh);
                 }
             }
         }
         cout << '\n';
     }
+    bool cycleBFS(T src)
+    {
+        if (!bidir)
+        {
+            map<T, bool> visited;
+            queue<T> q;
+            q.push(src);
+            visited[src] = true;
+            while (!q.empty())
+            {
+                T v = q.front();
+                q.pop();
+                cout << v << " -> ";
+                for (T neigh : adj[v])
+                {
+                    if (!visited[neigh])
+                    {
+                        visited[neigh] = true;
+                        q.push(neigh);
+                    }
+                    else
+                        return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
 };
 
 int main()
 {
-    Graph<char> g(true);
+    Graph<char> g(false);
     int choice = 1;
     char u, v;
     while (choice)
@@ -94,8 +122,18 @@ int main()
             cin >> u;
             g.bfs(u);
             break;
+        case 5:
+            cin >> u;
+            cout << g.cycleBFS(u) << "\n";
+            break;
         case 0:
             cout << "Quiting...\n";
         }
     }
 }
+// 1 A B
+// 1 B C
+// 1 D A
+// 1 D B
+// 1 C C
+// 1 B D
