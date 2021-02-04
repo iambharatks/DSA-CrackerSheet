@@ -30,6 +30,7 @@ class Solution
     unordered_map<Node *, Node *> visited;
 
 public:
+    //dfs
     Node *cloneGraph(Node *node)
     {
         if (!node)
@@ -48,5 +49,30 @@ public:
                 newNode->neighbors.push_back(visited[i]);
         }
         return newNode;
+    }
+    //bfs
+    Node *cloneGraphBFS(Node *node)
+    {
+        queue<Node *> q;
+        Node *newNode = new Node(node->val);
+        q.push(node);
+        visited[node] = newNode;
+        while (!q.empty())
+        {
+            Node *src = q.front();
+            q.pop();
+            for (Node *i : src->neighbors)
+            {
+                if (!visited[i])
+                {
+                    newNode = new Node(i->val);
+                    visited[i] = newNode;
+                    q.push(i);
+                }
+                else
+                    visited[src]->neighbors.push_back(visited[i]);
+            }
+        }
+        return visited[node];
     }
 };
