@@ -2,25 +2,33 @@
 
 using namespace std;
 
-vector<vector<bool>> visited;
-int dr[] = {2, 2, -2, -2, 1, 1, -1, -1};
-int dc[] = {1, -1, 1, -1, 2, -2, 2, -2};
-queue<int> qr, qc;
-int nodes_in_next_layer = 0;
-int nodes_left_in_layer = 0;
-bool reached_end = false;
-int move_count = 0;
 class Solution
 {
 
+    vector<vector<bool>> visited;
+    int move_count;
+    bool reached_end;
+    queue<int> qr, qc;
+    int nodes_in_next_layer;
+    int nodes_left_in_layer;
+
 public:
-    void explore_neighbours(int r, int c, vector<int> &TargetPos, int n)
+    Solution()
     {
+        move_count = 0;
+        reached_end = false;
+        nodes_in_next_layer = 0;
+        nodes_left_in_layer = 0;
+    }
+    void explore_neighbours(int r, int c, int n)
+    {
+        int dr[] = {2, 2, -2, -2, 1, 1, -1, -1};
+        int dc[] = {1, -1, 1, -1, 2, -2, 2, -2};
         for (int i = 0; i < 8; i++)
         {
             int rr = r + dr[i];
             int cc = c + dc[i];
-            if (rr < 0 || cc < 0 || rr >= n || cc >= n)
+            if (rr <= 0 || cc <= 0 || rr > n || cc > n)
                 continue;
             if (visited[rr][cc])
                 continue;
@@ -32,12 +40,7 @@ public:
     }
     int minStepToReachTarget(vector<int> &KnightPos, vector<int> &TargetPos, int n)
     {
-        visited.resize(n, vector<bool>(n, 0));
-        for (int i = 0; i < 2; i++)
-        {
-            TargetPos[i] -= 1;
-            KnightPos[i] -= 1;
-        }
+        visited.resize(n + 1, vector<bool>(n + 1, 0));
         qr.push(KnightPos[0]);
         qc.push(KnightPos[1]);
         visited[KnightPos[0]][KnightPos[1]] = true;
@@ -54,7 +57,7 @@ public:
                 reached_end = true;
                 break;
             }
-            explore_neighbours(r, c, TargetPos, n);
+            explore_neighbours(r, c, n);
             nodes_left_in_layer--;
             if (nodes_left_in_layer == 0)
             {
