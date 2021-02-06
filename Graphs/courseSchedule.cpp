@@ -2,7 +2,9 @@
 
 using namespace std;
 // Course Schedule
-class Solution
+//better
+//bfs
+class Solution1
 {
 public:
     bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
@@ -39,7 +41,8 @@ public:
         return true;
     }
 };
-class Solution
+//dfs
+class Solution2
 {
 public:
     bool dfsUtil(int course, vector<vector<int>> &graph, vector<int> &visited, vector<int> &reStack)
@@ -84,5 +87,5 @@ int main()
         cin >> u >> v;
         prequisites.push_back({u, v});
     }
-    cout << Solution().canFinish(numCourses, prequisites);
+    cout << Solution1().canFinish(numCourses, prequisites);
 }
