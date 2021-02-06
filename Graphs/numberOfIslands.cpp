@@ -2,6 +2,7 @@
 
 using namespace std;
 // Find the number of islands
+//BFS
 class Solution
 {
 public:
