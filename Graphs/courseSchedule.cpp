@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
-class Solution1
+// Course Schedule
+class Solution
 {
 public:
     bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
