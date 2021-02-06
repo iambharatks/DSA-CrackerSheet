@@ -63,42 +63,21 @@ public:
         }
         cout << '\n';
     }
-    
 };
-
 int main()
 {
-    Graph<char> g(false);
-    int choice = 1;
-    char u, v;
-    while (choice)
+    int n;
+    cin >> n;
+    int u, v, dist;
+    Graph<int> g(false);
+
+    while (n--)
     {
-        cout << "Select your choice\n\t1.add edge\n\t2.print graph\n\t3.dfs\n\t4.bfs\n\t0.Quite\n";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            cout << "Enter vertices\n";
-            cin >> u >> v;
-            g.addEdge(u, v);
-            break;
-        case 2:
-            g.print();
-            break;
-        case 3:
-            cout << "Enter source\n";
-            cin >> u;
-            g.dfs(u);
-            break;
-        case 4:
-            cout << "Enter source\n";
-            cin >> u;
-            g.bfs(u);
-            break;
-        case 0:
-            cout << "Quiting...\n";
-        }
+        cin >> u >> v >> dist;
+        g.addEdge(u, v, dist);
     }
+    cin >> u >> v;
+    g.dijktras(u);
 }
 // 1 A B
 // 1 B C
