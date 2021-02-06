@@ -2,7 +2,7 @@
 
 using namespace std;
 
-class Solution
+class Solution1
 {
 public:
     bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
@@ -39,7 +39,38 @@ public:
         return true;
     }
 };
-
+class Solution
+{
+public:
+    bool dfsUtil(int course, vector<vector<int>> &graph, vector<int> &visited, vector<int> &reStack)
+    {
+        visited[course] = true;
+        reStack[course] = true;
+        for (int nextCourse : graph[course])
+        {
+            if (!visited[nextCourse] && dfsUtil(nextCourse, graph, visited, reStack))
+                return true;
+            if (reStack[nextCourse])
+                return true;
+        }
+        reStack[course] = false;
+        return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
+    {
+        vector<int> visited(numCourses, 0);
+        vector<int> reStack(numCourses, 0);
+        vector<vector<int>> graph(numCourses);
+        for (auto courses : prerequisites)
+            graph[courses[0]].push_back(courses[1]);
+        for (int course = 0; course < numCourses; course++)
+        {
+            if (!visited[course] && dfsUtil(course, graph, visited, reStack))
+                return false;
+        }
+        return true;
+    }
+};
 int main()
 {
     int numCourses;
