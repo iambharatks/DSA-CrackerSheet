@@ -1,0 +1,1 @@
+{"name":"Local: alienDictionary","url":"d:\\DSA Sheet\\Graphs\\alienDictionary.cpp","tests":[{"id":1612673655097,"input":"3 3\ncaa aaa aab","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA Sheet\\Graphs\\alienDictionary.cpp","group":"local","local":true}
