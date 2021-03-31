@@ -60,6 +60,12 @@ public:
                 table[i][j] = left + right;
             }
         }
+        for (int i = 1; i < n + 1; i++)
+        {
+            for (int j = 0; j < m; j++)
+                cout << table[i][j] << " ";
+            cout << "\n";
+        }
         return table[n][m - 1];
     }
 };
@@ -88,5 +94,5 @@ int main()
     vector<int> S(m);
     for (int &i : S)
         cin >> i;
-    cout << Optimal().count(S, m, n);
+    cout << Solution().count(S, m, n);
 }
