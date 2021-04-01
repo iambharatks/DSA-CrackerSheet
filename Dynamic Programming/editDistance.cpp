@@ -2,7 +2,7 @@
 
 using namespace std;
 
-// Edit Distance 
+// Edit Distance
 
 int minimum(int i, int j, int k) { return min(i, min(j, k)); }
 
@@ -71,7 +71,7 @@ public:
                     dp[i][j] = j;
                 else if (j == 0)
                     dp[i][j] = i;
-                else if (s[i-1] == t[j-1])
+                else if (s[i - 1] == t[j - 1])
                     dp[i][j] = dp[i - 1][j - 1];
                 else
                     dp[i][j] = minimum(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1;
