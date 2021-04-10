@@ -1,0 +1,1 @@
+{"name":"Local: countInversion","url":"d:\\DSA Sheet\\Arrays\\countInversion.cpp","tests":[{"id":1617691493413,"input":"4\n0 2 3 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\DSA Sheet\\Arrays\\countInversion.cpp","group":"local","local":true}
