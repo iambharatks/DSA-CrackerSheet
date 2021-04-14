@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// Longest Repeating Subsequence 
+
 class recursion
 {
 public:
@@ -21,11 +23,13 @@ public:
 
 class Solution
 {
+    vector<vector<int>> dp;
+
 public:
     int LongestRepeatingSubsequence(string str)
     {
         size_t n = str.size();
-        vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+        dp.resize(n + 1, vector<int>(n + 1, 0));
 
         for (int i = 1; i <= n; i++)
         {
@@ -39,11 +43,29 @@ public:
         }
         return dp[n][n];
     }
+    void lrsSolution(string s)
+    {
+        size_t n = s.size();
+        LongestRepeatingSubsequence(s);
+        int val = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                if (val < dp[i][j])
+                {
+                    val = dp[i][j];
+                    cout << s[i - 1];
+                }
+            }
+        }
+        cout << '\n';
+    }
 };
 
 int main()
 {
     string s;
     cin >> s;
-    cout << recursion().LongestRepeatingSubsequence(s);
+    Solution().lrsSolution(s);
 }
