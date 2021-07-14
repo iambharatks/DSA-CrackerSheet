@@ -10,7 +10,7 @@ void print(int a[], int n)
         cout << a[i] << " ";
     // cout << endl;
 }
-//11. Merge 2 sorted arrays without using Extra space.
+//12. Merge 2 sorted arrays without using Extra space.
 //O(n*m)
 void brute(int *a1, int n1, int *a2, int n2)
 {

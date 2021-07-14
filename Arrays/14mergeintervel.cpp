@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-//12. Merge Intervals
+//14. Merge Intervals
 
 int main()
 {

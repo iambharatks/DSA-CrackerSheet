@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-//10. find duplicate in an array of N+1 Integers
+//11. find duplicate in an array of N+1 Integers
 int findDuplicate(int *arr, int n)
 {
     if (n == 2)
