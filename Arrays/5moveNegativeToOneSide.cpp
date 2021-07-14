@@ -10,17 +10,10 @@ void print(int *arr, int n)
     }
     cout << endl;
 }
-//5.Move all the negative elements to one side of the array 
+//5.Move all the negative elements to one side of the array
 
-int main()
+void solve1(int *arr, int n)
 {
-    int n;
-    cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
     int i = 0, l = 0;
     while (i < n)
     {
@@ -35,5 +28,16 @@ int main()
         }
     }
     print(arr, n);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
     return 0;
 }
